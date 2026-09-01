@@ -45,7 +45,7 @@ const updateSeo = () => {
   document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
   document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
   document.querySelector('meta[property="og:image"]')?.setAttribute('content', product.value.image);
-  document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://glam.pages.dev/producto/${product.value.id}`);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://glam-3in.pages.dev/producto/${product.value.id}`);
 };
 
 watch(product, updateSeo, { immediate: true });

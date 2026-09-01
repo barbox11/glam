@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-const SITE_URL = 'https://glam.pages.dev';
+const SITE_URL = 'https://glam-3in.pages.dev';
 
 function setMeta(selector: string, content: string) {
   const el = document.querySelector(selector) as HTMLMetaElement | null;

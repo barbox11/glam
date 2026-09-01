@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://glam.pages.dev/sitemap.xml
+Sitemap: https://glam-3in.pages.dev/sitemap.xml

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://glam.pages.dev/</loc><priority>1.0</priority></url>
-  <url><loc>https://glam.pages.dev/catalogo</loc><priority>0.9</priority></url>
-  <url><loc>https://glam.pages.dev/colecciones</loc><priority>0.8</priority></url>
-  <url><loc>https://glam.pages.dev/colecciones/rose-edit</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/colecciones/midnight</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/nosotros</loc><priority>0.6</priority></url>
-  <url><loc>https://glam.pages.dev/contacto</loc><priority>0.6</priority></url>
-  <url><loc>https://glam.pages.dev/producto/velvet-kiss</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/producto/lumiere-rose</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/producto/silk-veil</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/producto/midnight-line</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/producto/rose-petal-powder</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/producto/mascara-volume-noir</loc><priority>0.7</priority></url>
-  <url><loc>https://glam.pages.dev/producto/brow-architecture</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/</loc><priority>1.0</priority></url>
+  <url><loc>https://glam-3in.pages.dev/catalogo</loc><priority>0.9</priority></url>
+  <url><loc>https://glam-3in.pages.dev/colecciones</loc><priority>0.8</priority></url>
+  <url><loc>https://glam-3in.pages.dev/colecciones/rose-edit</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/colecciones/midnight</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/nosotros</loc><priority>0.6</priority></url>
+  <url><loc>https://glam-3in.pages.dev/contacto</loc><priority>0.6</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/velvet-kiss</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/lumiere-rose</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/silk-veil</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/midnight-line</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/rose-petal-powder</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/mascara-volume-noir</loc><priority>0.7</priority></url>
+  <url><loc>https://glam-3in.pages.dev/producto/brow-architecture</loc><priority>0.7</priority></url>
 </urlset>

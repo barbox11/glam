@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const SITE_URL = process.env.SITE_URL || 'https://glam.pages.dev';
+const SITE_URL = process.env.SITE_URL || 'https://glam-3in.pages.dev';
 
 // Import sin TS - leemos el archivo y parseamos manualmente o importamos via jiti
 // Simplificado: definimos rutas base y productos hardcode pero leídos del source
