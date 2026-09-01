@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import { getCollectionBySlug, getProductsByCollection } from '@/data/products';
 import ProductCard from '@/components/product/ProductCard.vue';
@@ -11,9 +11,13 @@ const router = useRouter();
 const collection = computed(() => getCollectionBySlug(route.params.slug as string));
 const products = computed(() => (collection.value ? getProductsByCollection(collection.value.slug) : []));
 
-if (!collection.value) {
-  router.replace({ name: 'not-found' });
-}
+watch(
+  collection,
+  (val) => {
+    if (!val) router.replace({ name: 'not-found' });
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
