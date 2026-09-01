@@ -45,32 +45,34 @@ const prefersReducedMotion = () =>
 
 watch([search, activeCategory], () => {
   if (!gridRef.value || prefersReducedMotion()) return;
+  if (window.matchMedia('(max-width: 767px)').matches) return;
   gsap.fromTo(
     gridRef.value.children,
-    { opacity: 0, y: 24 },
-    { opacity: 1, y: 0, duration: 0.6, stagger: 0.04, ease: 'power2.out' },
+    { opacity: 0, y: 16 },
+    { opacity: 1, y: 0, duration: 0.4, stagger: 0.03, ease: 'power2.out' },
   );
 });
 
 onMounted(() => {
   if (!heroRef.value) return;
-  if (!prefersReducedMotion()) {
+  const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+  if (!prefersReducedMotion() && !isMobile()) {
     gsap.from('.cat-hero-line', {
       yPercent: 100,
       opacity: 0,
-      duration: 1.2,
-      stagger: 0.1,
-      ease: 'power4.out',
+      duration: 0.8,
+      stagger: 0.07,
+      ease: 'power3.out',
     });
   }
-  if (gridRef.value && !prefersReducedMotion()) {
+  if (gridRef.value && !prefersReducedMotion() && !isMobile()) {
     gsap.from(gridRef.value.children, {
       scrollTrigger: { trigger: gridRef.value, start: 'top 85%' },
       opacity: 0,
-      y: 40,
-      duration: 0.9,
-      stagger: 0.06,
-      ease: 'power3.out',
+      y: 24,
+      duration: 0.6,
+      stagger: 0.04,
+      ease: 'power2.out',
     });
   }
 });

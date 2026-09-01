@@ -27,58 +27,59 @@ const prefersReducedMotion = () =>
 onMounted(() => {
   const reduced = prefersReducedMotion();
 
+  const isDesktop = () => window.matchMedia('(min-width: 768px)').matches;
+
   if (heroRef.value && !reduced) {
     gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.from('.hero-logo', { y: 40, opacity: 0, duration: 1.2, delay: 0.1 })
-        .from('.hero-eyebrow', { y: 20, opacity: 0, duration: 0.8 }, '-=0.8')
-        .from('.hero-meta', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
-        .from(
-          '.hero-image-mask',
-          { clipPath: 'inset(100% 0 0 0)', duration: 1.6, ease: 'power4.out' },
-          '-=1.0',
-        )
-        .from('.hero-image-inner', { scale: 1.25, duration: 2, ease: 'power2.out' }, '-=1.4')
+      tl.from('.hero-eyebrow', { y: 16, opacity: 0, duration: 0.6 }, 0.1)
+        .from('.hero-meta', { y: 16, opacity: 0, duration: 0.6 }, '-=0.4')
         .from(
           '.hero-title .split-line > span',
-          { y: '110%', duration: 1.4, stagger: 0.1, ease: 'power4.out' },
-          '-=1.2',
+          { y: '110%', duration: 0.9, stagger: 0.08, ease: 'power4.out' },
+          '-=0.3',
         )
-        .from('.hero-cta', { y: 20, opacity: 0, duration: 0.8, stagger: 0.1 }, '-=0.8')
-        .from('.hero-float', { opacity: 0, scale: 0.6, duration: 1.4, stagger: 0.1 }, '-=0.8');
+        .from('.hero-cta', { y: 16, opacity: 0, duration: 0.6, stagger: 0.08 }, '-=0.4');
+      // clipPath y scale solo en desktop para fluidez
+      if (isDesktop()) {
+        tl.from('.hero-image-mask', { clipPath: 'inset(100% 0 0 0)', duration: 1.1, ease: 'power4.out' }, '-=0.7')
+          .from('.hero-image-inner', { scale: 1.15, duration: 1.4, ease: 'power2.out' }, '-=1.0');
+      }
     }, heroRef.value);
 
-    gsap.to('.hero-image-inner', {
-      yPercent: 18,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroRef.value,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-    gsap.to('.hero-title', {
-      yPercent: -25,
-      opacity: 0.3,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroRef.value,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
+    // parallax solo en desktop — en mobile se pega y consume GPU
+    if (isDesktop()) {
+      gsap.to('.hero-image-inner', {
+        yPercent: 12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.value,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.6,
+        },
+      });
+      gsap.to('.hero-title', {
+        yPercent: -12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.value,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.6,
+        },
+      });
+    }
   }
 
-  if (introRef.value && !reduced) {
+  if (introRef.value && !reduced && isDesktop()) {
     gsap.from('.intro-line', {
-      scrollTrigger: { trigger: introRef.value, start: 'top 75%' },
-      yPercent: 100,
+      scrollTrigger: { trigger: introRef.value, start: 'top 80%' },
+      yPercent: 80,
       opacity: 0,
-      duration: 1.2,
-      stagger: 0.15,
-      ease: 'power4.out',
+      duration: 0.8,
+      stagger: 0.08,
+      ease: 'power3.out',
     });
   }
 

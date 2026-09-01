@@ -60,25 +60,26 @@ onMounted(() => {
   }
   if (!detailsRef.value) return;
   if (prefersReducedMotion()) return;
+  if (window.matchMedia('(max-width: 767px)').matches) return;
   gsap.from('.product-hero-img', {
-    scale: 1.15,
-    duration: 1.8,
+    scale: 1.08,
+    duration: 1,
     ease: 'power2.out',
   });
   gsap.from('.product-hero-line', {
     yPercent: 100,
     opacity: 0,
-    duration: 1.2,
-    stagger: 0.1,
-    ease: 'power4.out',
-    delay: 0.2,
+    duration: 0.7,
+    stagger: 0.07,
+    ease: 'power3.out',
+    delay: 0.15,
   });
   gsap.from('.reveal', {
-    scrollTrigger: { trigger: detailsRef.value, start: 'top 80%' },
+    scrollTrigger: { trigger: detailsRef.value, start: 'top 85%' },
     opacity: 0,
-    y: 20,
-    duration: 0.8,
-    stagger: 0.08,
+    y: 16,
+    duration: 0.6,
+    stagger: 0.06,
     ease: 'power3.out',
   });
 });

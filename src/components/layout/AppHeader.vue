@@ -86,7 +86,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
         class="block transition-opacity hover:opacity-80"
         aria-label="GLAM — Inicio"
       >
-        <img src="/brand/logo.png" alt="GLAM" class="h-10 w-auto md:h-16" />
+        <img src="/brand/logo.png" alt="GLAM" class="h-12 w-auto md:h-20 lg:h-[84px]" />
       </RouterLink>
 
       <!-- Right: WhatsApp — 44px touch target en mobile -->

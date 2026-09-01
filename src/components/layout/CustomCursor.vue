@@ -12,8 +12,8 @@ const target = { x: -100, y: -100 };
 const ringPos = { x: -100, y: -100 };
 const dotPos = { x: -100, y: -100 };
 
-const RING_EASE = 0.15;
-const DOT_EASE = 0.6;
+const RING_EASE = 0.22;
+const DOT_EASE = 0.85;
 
 type EstadoCursor = 'ver' | 'explorar' | 'hablar';
 let activeState: EstadoCursor | null = null;

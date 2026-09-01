@@ -9,6 +9,10 @@ import CustomCursor from '@/components/layout/CustomCursor.vue';
 const { init } = useLenis();
 
 onMounted(() => {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  // En móvil desactivar Lenis — scroll nativo es más fluido y no se pega
+  if (prefersReduced || isCoarse) return;
   init();
 });
 </script>
