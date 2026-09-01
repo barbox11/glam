@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-glam-white text-glam-ink font-sans;
+    overflow-x: hidden;
+  }
+
+  body.custom-cursor,
+  body.custom-cursor a,
+  body.custom-cursor button,
+  body.custom-cursor [role='button'],
+  body.custom-cursor label,
+  body.custom-cursor input,
+  body.custom-cursor textarea,
+  body.custom-cursor select {
+    cursor: none !important;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-glam-rose-400 text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-glam-rose-400 ring-offset-2 ring-offset-glam-white;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full bg-glam-ink px-8 py-4 text-[11px] font-medium uppercase tracking-ultra text-white transition-all duration-500 ease-elegant hover:bg-glam-rose-500 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-3 rounded-full border border-glam-ink px-8 py-4 text-[11px] font-medium uppercase tracking-ultra text-glam-ink transition-all duration-500 ease-elegant hover:bg-glam-ink hover:text-white active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-[11px] uppercase tracking-ultra text-glam-ink transition-colors hover:text-glam-rose-500;
+  }
+
+  .btn-whatsapp {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 py-4 text-[11px] font-medium uppercase tracking-ultra text-white transition-all duration-500 ease-elegant hover:bg-[#1DAE53] hover:shadow-lg hover:shadow-[#25D366]/25 active:scale-[0.98];
+  }
+
+  .eyebrow {
+    @apply text-[10px] uppercase tracking-ultra text-glam-rose-500 font-medium;
+  }
+
+  .container-editorial {
+    @apply mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-16;
+  }
+
+  .link-underline {
+    @apply relative inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-700 ease-elegant;
+  }
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+
+  /* Editorial display utilities */
+  .display-xl {
+    @apply font-display font-light leading-[0.92] tracking-[-0.02em];
+    font-size: clamp(3.5rem, 12vw, 11rem);
+  }
+  .display-lg {
+    @apply font-display font-light leading-[0.95] tracking-[-0.01em];
+    font-size: clamp(2.5rem, 8vw, 6rem);
+  }
+  .display-md {
+    @apply font-display font-light leading-tight;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .italic-display {
+    @apply font-display italic font-light;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-glam-line;
+  }
+
+  /* Number markers */
+  .marker {
+    @apply font-display text-[10rem] leading-none text-glam-rose-200;
+  }
+}
+
+/* Reveal helpers */
+.gsap-init {
+  opacity: 0;
+}
+
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+.split-line > span {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+.split-char {
+  display: inline-block;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  .gsap-init {
+    opacity: 1 !important;
+  }
+  .split-line > span {
+    transform: none !important;
+  }
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* Lenis */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Page transitions (Route-level) */
+.page-enter-active {
+  transition: clip-path 900ms cubic-bezier(0.76, 0, 0.24, 1),
+              opacity 600ms ease;
+}
+.page-leave-active {
+  transition: clip-path 700ms cubic-bezier(0.76, 0, 0.24, 1),
+              opacity 400ms ease;
+}
+.page-enter-from {
+  clip-path: inset(100% 0 0 0);
+  opacity: 0.4;
+}
+.page-leave-to {
+  clip-path: inset(0 0 100% 0);
+  opacity: 1;
+}
+
+/* Custom cursor — two-layer system for smoothness */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  /* Hidden by default until JS mounts and only on desktop */
+  opacity: 0;
+}
+body.custom-cursor .cursor-dot,
+body.custom-cursor .cursor-ring {
+  opacity: 1;
+}
+
+/* Inner dot — tracks exactly where the cursor is */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #0F0F12;
+  border-radius: 999px;
+  transition: opacity 200ms ease, background-color 250ms ease, width 200ms ease, height 200ms ease;
+}
+.cursor-ring[data-state] ~ .cursor-dot {
+  background: #E84B8A;
+  width: 4px;
+  height: 4px;
+}
+.cursor-ring[data-hidden] ~ .cursor-dot {
+  opacity: 0;
+}
+
+/* Outer ring — smooth follow, conveys interaction state */
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #0F0F12;
+  border-radius: 999px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 250ms ease,
+    background-color 250ms ease,
+    opacity 200ms ease;
+}
+
+/* State: ver — sobre productos / imágenes */
+.cursor-ring[data-state='ver'] {
+  width: 80px;
+  height: 80px;
+  border-color: transparent;
+  background: rgba(232, 75, 138, 0.95);
+  mix-blend-mode: normal;
+}
+
+/* State: explorar — sobre CTAs principales */
+.cursor-ring[data-state='explorar'] {
+  width: 96px;
+  height: 96px;
+  border-color: transparent;
+  background: #0F0F12;
+}
+
+/* State: hablar — sobre WhatsApp */
+.cursor-ring[data-state='hablar'] {
+  width: 96px;
+  height: 96px;
+  border-color: transparent;
+  background: #25D366;
+}
+
+/* Press feedback (click) */
+.cursor-ring[data-press='true'] {
+  transform: translate(-50%, -50%) scale(0.85) !important;
+  transition: transform 120ms ease;
+}
+
+/* Label inside ring */
+.cursor-ring__label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 250ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  white-space: nowrap;
+  user-select: none;
+}
+.cursor-ring[data-state] .cursor-ring__label {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hidden when leaving viewport */
+.cursor-ring[data-hidden] {
+  opacity: 0;
+}
+
+/* Reduced motion: no transitions, snap immediately */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring,
+  .cursor-ring__label {
+    transition: none !important;
+  }
+}

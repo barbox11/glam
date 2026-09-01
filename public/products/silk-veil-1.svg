@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAF7F5"/>
+      <stop offset="1" stop-color="#F8E5EC"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.4" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#F0C7D6" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#F0C7D6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <rect width="800" height="1000" fill="url(#glow)"/>
+
+  <!-- Foundation bottle -->
+  <g transform="translate(400 500)">
+    <!-- pump cap -->
+    <rect x="-46" y="-260" width="92" height="20" rx="3" fill="#0F0F12"/>
+    <rect x="-26" y="-280" width="52" height="22" rx="2" fill="#0F0F12"/>
+    <!-- shoulder -->
+    <path d="M -70 -240 Q -70 -260 -50 -260 L 50 -260 Q 70 -260 70 -240 L 70 -210 L -70 -210 Z" fill="#F4EFEB" stroke="#0F0F12" stroke-width="1.5"/>
+    <!-- bottle body (frosted glass) -->
+    <rect x="-90" y="-210" width="180" height="380" rx="10" fill="#F4EFEB" stroke="#0F0F12" stroke-width="1.5" opacity="0.92"/>
+    <!-- liquid line -->
+    <path d="M -86 -160 L 86 -160 L 86 160 Q 86 168 78 168 L -78 168 Q -86 168 -86 160 Z" fill="#E84B8A" opacity="0.18"/>
+    <!-- shine -->
+    <rect x="-66" y="-190" width="8" height="350" rx="4" fill="#FFFFFF" opacity="0.5"/>
+    <rect x="-52" y="-180" width="4" height="200" rx="2" fill="#FFFFFF" opacity="0.4"/>
+    <!-- label -->
+    <rect x="-70" y="-40" width="140" height="120" rx="3" fill="#FFFFFF" opacity="0.95"/>
+    <text y="-2" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="4">GLAM</text>
+    <text y="22" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="11" letter-spacing="3" opacity="0.7">SILK VEIL</text>
+    <text y="46" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="10" letter-spacing="2" opacity="0.5">FOND DE TEINT</text>
+    <line x1="-50" y1="60" x2="50" y2="60" stroke="#0F0F12" stroke-width="0.5" opacity="0.3"/>
+    <text y="74" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="9" letter-spacing="2" opacity="0.5">30 ml · 1 fl oz</text>
+    <!-- base shadow -->
+    <ellipse cx="0" cy="200" rx="120" ry="14" fill="#0F0F12" opacity="0.1"/>
+  </g>
+
+  <text x="48" y="60" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">N° 03 · PIEL</text>
+  <text x="752" y="952" text-anchor="end" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">SILK VEIL</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAF7F5"/>
+      <stop offset="1" stop-color="#F8E5EC"/>
+    </linearGradient>
+    <radialGradient id="g" cx="0.5" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#E84B8A" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#E84B8A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <rect width="800" height="1000" fill="url(#g)"/>
+
+  <!-- Editorial abstract composition -->
+  <g transform="translate(400 500)">
+    <!-- soft blob -->
+    <ellipse cx="0" cy="40" rx="240" ry="180" fill="#F0C7D6" opacity="0.6"/>
+    <ellipse cx="-80" cy="-20" rx="120" ry="100" fill="#E89BB6" opacity="0.55"/>
+    <ellipse cx="100" cy="60" rx="140" ry="90" fill="#C0306B" opacity="0.35"/>
+    <!-- abstract petal strokes -->
+    <path d="M -180 -120 Q -60 -200 80 -140" fill="none" stroke="#0F0F12" stroke-width="2" opacity="0.85" stroke-linecap="round"/>
+    <path d="M -160 -80 Q -40 -160 100 -100" fill="none" stroke="#0F0F12" stroke-width="2" opacity="0.65" stroke-linecap="round"/>
+    <path d="M -140 -40 Q -20 -120 120 -60" fill="none" stroke="#0F0F12" stroke-width="2" opacity="0.45" stroke-linecap="round"/>
+    <!-- center mark -->
+    <text y="180" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="22" letter-spacing="10" opacity="0.9">GLAM</text>
+    <text y="208" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="10" letter-spacing="6" opacity="0.55">EST · 2026</text>
+  </g>
+
+  <text x="48" y="60" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">EDITORIAL</text>
+  <text x="752" y="952" text-anchor="end" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">ROSE EDIT</text>
+</svg>

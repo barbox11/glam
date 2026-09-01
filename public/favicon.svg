@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#FAF7F5"/>
+  <path d="M22 14 L42 14 L40 22 L24 22 Z M20 24 L44 24 L42 32 L22 32 Z M18 34 L46 34 L44 42 L20 42 Z M16 44 L48 44 L46 50 L18 50 Z"
+        fill="none" stroke="#0F0F12" stroke-width="1.2"/>
+  <rect x="6" y="46" width="52" height="14" fill="#F8B5C8"/>
+  <text x="50%" y="55" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="9" font-weight="600" letter-spacing="2">GLAM</text>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAF7F5"/>
+      <stop offset="1" stop-color="#F8E5EC"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+
+  <!-- Blush compact -->
+  <g transform="translate(400 500)">
+    <!-- outer shell -->
+    <rect x="-220" y="-160" width="440" height="320" rx="14" fill="#0F0F12"/>
+    <rect x="-220" y="-160" width="440" height="320" rx="14" fill="none" stroke="#E84B8A" stroke-width="1" opacity="0.3"/>
+    <!-- blush pan -->
+    <rect x="-200" y="-140" width="400" height="280" rx="6" fill="#F0C7D6"/>
+    <!-- embossed petal motif -->
+    <g opacity="0.55">
+      <circle cx="0" cy="0" r="100" fill="#E84B8A"/>
+      <circle cx="-70" cy="-40" r="55" fill="#E89BB6"/>
+      <circle cx="70" cy="-40" r="55" fill="#E89BB6"/>
+      <circle cx="0" cy="80" r="55" fill="#C0306B"/>
+    </g>
+    <!-- shine -->
+    <rect x="-160" y="-120" width="80" height="20" rx="10" fill="#FFFFFF" opacity="0.25"/>
+    <!-- mark -->
+    <text x="0" y="220" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, serif" font-size="14" letter-spacing="6" opacity="0.95">GLAM</text>
+  </g>
+
+  <text x="48" y="60" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">N° 05 · ROSTRO</text>
+  <text x="752" y="952" text-anchor="end" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">ROSE PETAL</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <rect width="800" height="1000" fill="#FAF7F5"/>
+  <rect width="800" height="1000" fill="#F8E5EC" opacity="0.5"/>
+  <g transform="translate(400 500)">
+    <ellipse rx="200" ry="160" fill="#F0C7D6" opacity="0.4"/>
+    <text y="0" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="200" letter-spacing="20" opacity="0.04">G</text>
+  </g>
+</svg>

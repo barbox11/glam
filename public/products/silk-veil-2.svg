@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <rect width="800" height="1000" fill="#F4EFEB"/>
+  <g transform="translate(400 500)">
+    <rect x="-46" y="-260" width="92" height="20" rx="3" fill="#0F0F12"/>
+    <path d="M -70 -240 Q -70 -260 -50 -260 L 50 -260 Q 70 -260 70 -240 L 70 -210 L -70 -210 Z" fill="#FAF7F5" stroke="#0F0F12"/>
+    <rect x="-90" y="-210" width="180" height="380" rx="10" fill="#F4EFEB" stroke="#0F0F12"/>
+    <rect x="-70" y="-40" width="140" height="120" rx="3" fill="#FFFFFF"/>
+    <text y="-2" text-anchor="middle" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="4">SILK VEIL</text>
+  </g>
+  <text x="48" y="60" fill="#0F0F12" font-family="Georgia, serif" font-size="14" letter-spacing="3" opacity="0.55">DETALLE · SILK</text>
+</svg>
