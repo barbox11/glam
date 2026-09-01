@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 import { generateWhatsAppLink } from '@/utils/whatsapp';
+import { trackWhatsAppClick } from '@/utils/analytics';
 import { glamConfig } from '@/config/glam.config';
 const { url } = generateWhatsAppLink(undefined, { source: 'floating-button' });
 </script>
@@ -14,6 +15,7 @@ const { url } = generateWhatsAppLink(undefined, { source: 'floating-button' });
     style="min-width: 56px; min-height: 56px;"
     :aria-label="`Contactar a GLAM por WhatsApp al ${glamConfig.whatsapp.number}`"
     data-testid="floating-whatsapp"
+    @click="trackWhatsAppClick({ source: 'floating-button' })"
   >
     <span class="sr-only">Contactar a GLAM por WhatsApp</span>
     <span class="pointer-events-none absolute inset-0 -z-10 animate-ping rounded-full bg-[#25D366]/40 opacity-60 motion-reduce:hidden" />

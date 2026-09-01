@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "build": "vue-tsc --noEmit && node scripts/generate-sitemap.mjs && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.vue",
     "lint:fix": "eslint . --ext .ts,.vue --fix",

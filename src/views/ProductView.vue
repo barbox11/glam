@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { getProductById, getRelatedProducts, categories } from '@/data/products';
 import { generateWhatsAppLink } from '@/utils/whatsapp';
+import { trackWhatsAppClick } from '@/utils/analytics';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 import ArrowRight from '@/components/icons/ArrowRight.vue';
 import ProductCard from '@/components/product/ProductCard.vue';
@@ -34,6 +35,20 @@ const categoryLabel = computed(() =>
 const whatsappLink = computed(() =>
   product.value ? generateWhatsAppLink(product.value) : generateWhatsAppLink(),
 );
+
+const updateSeo = () => {
+  if (!product.value) return;
+  const title = `${product.value.name} — GLAM`;
+  document.title = title;
+  const desc = `${product.value.tagline} — ${product.value.description.slice(0, 140)}`;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
+  document.querySelector('meta[property="og:image"]')?.setAttribute('content', product.value.image);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', `https://glam.pages.dev/producto/${product.value.id}`);
+};
+
+watch(product, updateSeo, { immediate: true });
 
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -179,6 +194,7 @@ onMounted(() => {
               data-cursor="hablar"
               data-cursor-label="Hablar"
               data-testid="product-whatsapp"
+              @click="trackWhatsAppClick({ source: 'product-detail', product: product?.name })"
             >
               <WhatsAppIcon class="h-5 w-5" />
               Consultar por WhatsApp

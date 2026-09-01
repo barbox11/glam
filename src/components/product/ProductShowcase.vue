@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import gsap from 'gsap';
 import type { Product } from '@/data/products';
 import { generateWhatsAppLink } from '@/utils/whatsapp';
+import { trackWhatsAppClick } from '@/utils/analytics';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 import ArrowRight from '@/components/icons/ArrowRight.vue';
 
@@ -126,6 +127,7 @@ const layoutFor = (i: number) => {
                 class="text-[11px] uppercase tracking-ultra text-glam-ink/70 transition-colors hover:text-glam-rose-500"
                 data-cursor="hablar"
                 data-cursor-label="Hablar"
+                @click="trackWhatsAppClick({ source: 'showcase', product: product.name })"
               >
                 Consultar
               </a>
@@ -223,6 +225,7 @@ data-cursor="ver"
                 class="btn-whatsapp"
                 data-cursor="hablar"
                 data-cursor-label="Hablar"
+                @click="trackWhatsAppClick({ source: 'showcase-full', product: product.name })"
               >
                 <WhatsAppIcon class="h-4 w-4" />
                 Consultar

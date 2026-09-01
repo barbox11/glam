@@ -4,6 +4,7 @@ import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useScrollPosition } from '@/composables/useScrollPosition';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 import { glamConfig } from '@/config/glam.config';
+import { trackWhatsAppClick } from '@/utils/analytics';
 
 const route = useRoute();
 const { scrolled } = useScrollPosition(40);
@@ -95,6 +96,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
         rel="noopener noreferrer"
         class="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 text-[11px] uppercase tracking-ultra text-glam-ink transition-colors hover:text-glam-rose-500 md:min-h-0 md:min-w-0"
         data-testid="header-whatsapp"
+        @click="trackWhatsAppClick({ source: 'header' })"
       >
         <span class="hidden md:inline">WhatsApp</span>
         <WhatsAppIcon class="h-5 w-5 md:h-4 md:w-4" />
@@ -148,6 +150,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
                 target="_blank"
                 rel="noopener noreferrer"
                 class="font-display text-2xl text-glam-ink transition-colors hover:text-glam-rose-500"
+                @click="trackWhatsAppClick({ source: 'menu' })"
               >
                 {{ glamConfig.whatsapp.number }}
               </a>

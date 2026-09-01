@@ -17,3 +17,5 @@ imagenes/
 .agents/
 .opencode/
 .claude/
+*.mp4
+public/hero/*.mp4

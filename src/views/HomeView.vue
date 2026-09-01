@@ -10,6 +10,7 @@ import EditorialMarquee from '@/components/ui/EditorialMarquee.vue';
 import ProductShowcase from '@/components/product/ProductShowcase.vue';
 import CategoryGrid from '@/components/category/CategoryGrid.vue';
 import { generateWhatsAppLink } from '@/utils/whatsapp';
+import { trackWhatsAppClick } from '@/utils/analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -169,6 +170,7 @@ const marqueeItems = [
             data-cursor="hablar"
             data-cursor-label="Hablar"
             data-testid="hero-whatsapp"
+            @click="trackWhatsAppClick({ source: 'hero' })"
           >
             <WhatsAppIcon class="h-4 w-4" />
             Hablar por WhatsApp
@@ -265,6 +267,7 @@ const marqueeItems = [
                   class="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-[11px] font-medium uppercase tracking-ultra text-white transition-colors hover:bg-[#1DAE53]"
                   data-cursor="hablar"
                   data-cursor-label="Hablar"
+                  @click="trackWhatsAppClick({ source: 'home-editorial', product: productSilkVeil.name })"
                 >
                   <WhatsAppIcon class="h-4 w-4" />
                   Consultar
@@ -296,6 +299,7 @@ const marqueeItems = [
           data-cursor="hablar"
           data-cursor-label="Hablar"
           data-testid="home-cta-whatsapp"
+          @click="trackWhatsAppClick({ source: 'home-cta' })"
         >
           <WhatsAppIcon class="h-5 w-5" />
           Hablar por WhatsApp

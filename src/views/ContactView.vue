@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { glamConfig } from '@/config/glam.config';
 import { generateWhatsAppLink } from '@/utils/whatsapp';
+import { trackWhatsAppClick } from '@/utils/analytics';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 
 const { url, message } = generateWhatsAppLink(undefined, { source: 'contact-page' });
@@ -31,6 +32,7 @@ const { url, message } = generateWhatsAppLink(undefined, { source: 'contact-page
                 rel="noopener noreferrer"
                 class="font-display text-2xl text-glam-ink hover:text-glam-rose-500 md:text-3xl"
                 data-testid="contact-whatsapp"
+                @click="trackWhatsAppClick({ source: 'contact-page' })"
               >
                 {{ glamConfig.whatsapp.number }}
               </a>
@@ -46,6 +48,7 @@ const { url, message } = generateWhatsAppLink(undefined, { source: 'contact-page
             target="_blank"
             rel="noopener noreferrer"
             class="btn-whatsapp mt-10"
+            @click="trackWhatsAppClick({ source: 'contact-page-cta' })"
           >
             <WhatsAppIcon class="h-5 w-5" />
             Abrir WhatsApp
