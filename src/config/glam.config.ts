@@ -12,7 +12,7 @@ export const glamConfig = {
       'Hola, GLAM.\n\nEstoy interesada en conocer más sobre sus productos.\n¿Podrían darme más información?',
   },
   contact: {
-    instagram: 'https://instagram.com/',
+    instagram: 'https://www.instagram.com/glamm.by.valen?igsh=MXBmeHUzdjdkeDlvcw==',
     tiktok: 'https://tiktok.com/',
   },
 } as const;
