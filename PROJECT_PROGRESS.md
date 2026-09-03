@@ -1,7 +1,7 @@
 # PROJECT PROGRESS — GLAM
 
 > Catálogo digital premium de maquillaje. NO tienda.
-> Conversión = WhatsApp `+57 316 432 4637`.
+> Conversión = WhatsApp (número privado — centralizado en `src/config/glam.config.ts`).
 
 ---
 

@@ -45,13 +45,16 @@ e2e/glam.spec.ts              # 17 tests × 2 proyectos (desktop + mobile)
 
 ## Configuración centralizada
 
-Toda referencia al número de WhatsApp vive en `src/config/glam.config.ts`:
+Toda referencia al número de WhatsApp vive en `src/config/glam.config.ts` (no se expone el número en la documentación):
 
 ```ts
-whatsapp: {
-  number: '+57 316 432 4637',
-  numberRaw: '573164324637',
-  defaultMessage: 'Hola GLAM 👋\n\n...',
+// src/config/glam.config.ts
+export const glamConfig = {
+  whatsapp: {
+    number: '***',       // número privado, centralizado en glam.config.ts
+    numberRaw: '***',
+    defaultMessage: 'Hola GLAM 👋\n\n...',
+  }
 }
 ```
 
