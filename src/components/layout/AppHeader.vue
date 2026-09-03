@@ -5,10 +5,16 @@ import { useScrollPosition } from '@/composables/useScrollPosition';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 import { glamConfig } from '@/config/glam.config';
 import { trackWhatsAppClick } from '@/utils/analytics';
+import { useCart } from '@/composables/useCart';
 
 const route = useRoute();
 const { scrolled } = useScrollPosition(40);
 const isOpen = ref(false);
+const { count: cartCount } = useCart();
+
+function openCart() {
+  window.dispatchEvent(new CustomEvent('glam:open-cart'));
+}
 
 watch(
   () => route.fullPath,
@@ -89,18 +95,41 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
         <img src="/brand/logo.svg" alt="GLAM BY VALEN" class="h-12 w-auto md:h-20 lg:h-[84px]" width="170" height="110" />
       </RouterLink>
 
-      <!-- Right: WhatsApp — 44px touch target en mobile -->
-      <a
-        :href="`https://wa.me/${glamConfig.whatsapp.numberRaw}`"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 text-[11px] uppercase tracking-ultra text-glam-ink transition-colors hover:text-glam-rose-500 md:min-h-0 md:min-w-0"
-        data-testid="header-whatsapp"
-        @click="trackWhatsAppClick({ source: 'header' })"
-      >
-        <span class="hidden md:inline">WhatsApp</span>
-        <WhatsAppIcon class="h-5 w-5 md:h-4 md:w-4" />
-      </a>
+      <!-- Right: actions -->
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          class="relative flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full px-3 text-[11px] uppercase tracking-ultra text-glam-ink transition-colors hover:bg-glam-line/30 md:min-h-0 md:min-w-0"
+          aria-label="Abrir carrito"
+          data-testid="header-cart"
+          @click="openCart"
+        >
+          <svg viewBox="0 0 24 24" class="h-5 w-5 md:h-4 md:w-4" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M6 7h12l-1 9H7L6 7z" />
+            <path d="M9 7V5a3 3 0 016 0v2" />
+          </svg>
+          <span class="hidden md:inline">Carrito</span>
+          <span
+            v-if="cartCount > 0"
+            class="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-glam-rose-500 px-1.5 text-[10px] font-bold text-white"
+            :aria-label="`${cartCount} productos en el carrito`"
+            data-testid="cart-badge"
+          >
+            {{ cartCount > 99 ? '99+' : cartCount }}
+          </span>
+        </button>
+        <a
+          :href="`https://wa.me/${glamConfig.whatsapp.numberRaw}`"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 text-[11px] uppercase tracking-ultra text-glam-ink transition-colors hover:text-glam-rose-500 md:min-h-0 md:min-w-0"
+          data-testid="header-whatsapp"
+          @click="trackWhatsAppClick({ source: 'header' })"
+        >
+          <span class="hidden md:inline">WhatsApp</span>
+          <WhatsAppIcon class="h-5 w-5 md:h-4 md:w-4" />
+        </a>
+      </div>
     </div>
   </header>
 

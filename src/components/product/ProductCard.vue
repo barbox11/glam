@@ -2,11 +2,23 @@
 import { RouterLink } from 'vue-router';
 import type { Product } from '@/data/products';
 import { categories } from '@/data/products';
+import { useCart } from '@/composables/useCart';
+import { trackEvent } from '@/utils/analytics';
 
-defineProps<{ product: Product }>();
+const props = defineProps<{ product: Product }>();
 
 const getCategoryLabel = (id: string) =>
   categories.find((c) => c.id === id)?.label ?? id;
+
+const { add } = useCart();
+
+function quickAdd(e: Event) {
+  e.preventDefault();
+  e.stopPropagation();
+  add(props.product.id, undefined, 1);
+  trackEvent('add_to_cart', { product: props.product.name });
+  window.dispatchEvent(new CustomEvent('glam:open-cart'));
+}
 </script>
 
 <template>
@@ -32,6 +44,15 @@ const getCategoryLabel = (id: string) =>
       >
         Nuevo
       </span>
+      <button
+        type="button"
+        class="absolute bottom-3 right-3 hidden h-9 w-9 items-center justify-center rounded-full bg-glam-ink text-white opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100 hover:bg-glam-rose-500 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-glam-rose-400 md:flex"
+        aria-label="Añadir al carrito"
+        data-testid="quick-add"
+        @click="quickAdd"
+      >
+        <span aria-hidden="true" class="text-lg leading-none">+</span>
+      </button>
     </div>
 
     <div class="mt-5 flex items-start justify-between gap-4">

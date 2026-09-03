@@ -5,6 +5,7 @@ import AppHeader from '@/components/layout/AppHeader.vue';
 import AppFooter from '@/components/layout/AppFooter.vue';
 import FloatingWhatsApp from '@/components/layout/FloatingWhatsApp.vue';
 import CustomCursor from '@/components/layout/CustomCursor.vue';
+import CartDrawer from '@/components/cart/CartDrawer.vue';
 
 const { init } = useLenis();
 
@@ -36,5 +37,6 @@ onMounted(() => {
     </main>
     <AppFooter />
     <FloatingWhatsApp />
+    <CartDrawer />
   </div>
 </template>

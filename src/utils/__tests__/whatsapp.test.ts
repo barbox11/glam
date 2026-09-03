@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateWhatsAppLink } from '@/utils/whatsapp';
+import { generateWhatsAppLink, generateWhatsAppCartLink, buildCartMessage } from '@/utils/whatsapp';
 import { glamConfig } from '@/config/glam.config';
 import { products } from '@/data/products';
 
@@ -108,5 +108,40 @@ describe('Productos (data)', () => {
   it('los slugs son únicos', () => {
     const slugs = products.map((p) => p.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
+  });
+});
+
+describe('WhatsApp carrito', () => {
+  it('buildCartMessage con 0 items devuelve default', () => {
+    expect(buildCartMessage([])).toContain('Hola, GLAM');
+  });
+
+  it('genera mensaje con lista detallada + total + links', () => {
+    const items = [
+      { id: 'velvet-kiss', name: 'Beso de Terciopelo', quantity: 2, toneName: 'Alma Desnuda', price: 'Desde $89.000 COP' },
+      { id: 'silk-veil', name: 'Velo de Seda', quantity: 1, price: 'Desde $145.000 COP' },
+    ];
+    const msg = buildCartMessage(items);
+    expect(msg).toContain('2x Beso de Terciopelo');
+    expect(msg).toContain('Tono: Alma Desnuda');
+    expect(msg).toContain('https://glam-3in.pages.dev/producto/velvet-kiss');
+    expect(msg).toContain('https://glam-3in.pages.dev/producto/silk-veil');
+    expect(msg).toContain('Total estimado:');
+    expect(msg).toContain('323.000');
+  });
+
+  it('generateWhatsAppCartLink codifica correctamente', () => {
+    const items = [{ id: 'velvet-kiss', name: 'Beso', quantity: 1, price: 'Desde $89.000 COP' }];
+    const { url, message } = generateWhatsAppCartLink(items);
+    expect(url).toContain('https://wa.me/573164324637');
+    expect(url).toContain('text=');
+    const params = new URLSearchParams(url.split('?')[1]);
+    expect(params.get('text')).toBe(message);
+  });
+
+  it('clamp implícito en mensaje max 99', () => {
+    const items = [{ id: 'velvet-kiss', name: 'Beso', quantity: 99, price: 'Desde $89.000 COP' }];
+    const msg = buildCartMessage(items);
+    expect(msg).toContain('99x');
   });
 });

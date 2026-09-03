@@ -58,6 +58,12 @@ export const router = createRouter({
       meta: { title: 'Contacto — GLAM', description: 'Conversemos por WhatsApp. Respuesta personal en 24h.' },
     },
     {
+      path: '/carrito',
+      name: 'cart',
+      component: () => import('@/views/CartView.vue'),
+      meta: { title: 'Carrito — GLAM', description: 'Revisa tu selección y envía tu pedido por WhatsApp.' },
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('@/views/NotFoundView.vue'),

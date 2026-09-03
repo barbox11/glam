@@ -3,9 +3,10 @@ import { computed, ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { getProductById, getRelatedProducts, categories } from '@/data/products';
+import { getProductById, getRelatedProducts, categories, type ProductTone } from '@/data/products';
 import { generateWhatsAppLink } from '@/utils/whatsapp';
-import { trackWhatsAppClick } from '@/utils/analytics';
+import { trackWhatsAppClick, trackEvent } from '@/utils/analytics';
+import { useCart } from '@/composables/useCart';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 import ArrowRight from '@/components/icons/ArrowRight.vue';
 import ProductCard from '@/components/product/ProductCard.vue';
@@ -18,14 +19,48 @@ const router = useRouter();
 const product = computed(() => getProductById(route.params.id as string));
 const activeImage = ref(0);
 const detailsRef = ref<HTMLElement | null>(null);
+const selectedTone = ref<ProductTone | undefined>(undefined);
+const quantity = ref(1);
+const addedToast = ref(false);
+const { add: addToCart } = useCart();
 
 watch(
   () => route.params.id,
   () => {
     activeImage.value = 0;
+    selectedTone.value = undefined;
+    quantity.value = 1;
     window.scrollTo({ top: 0, behavior: 'auto' });
   },
 );
+
+watch(
+  () => product.value?.id,
+  () => {
+    selectedTone.value = undefined;
+    quantity.value = 1;
+  },
+);
+
+function decQty() {
+  if (quantity.value > 1) quantity.value--;
+}
+function incQty() {
+  if (quantity.value < 99) quantity.value++;
+}
+
+function openCartFromToast() {
+  window.dispatchEvent(new CustomEvent('glam:open-cart'));
+}
+function handleAddToCart() {
+  if (!product.value) return;
+  addToCart(product.value.id, selectedTone.value, quantity.value);
+  trackEvent('add_to_cart', { product: product.value.name, category: product.value.category });
+  // toast + open drawer
+  addedToast.value = true;
+  window.dispatchEvent(new CustomEvent('glam:open-cart'));
+  setTimeout(() => (addedToast.value = false), 2500);
+}
 
 const related = computed(() => (product.value ? getRelatedProducts(product.value, 3) : []));
 const categoryLabel = computed(() =>
@@ -169,41 +204,94 @@ onMounted(() => {
           </p>
 
           <div v-if="product.tones && product.tones.length" class="mt-10">
-            <p class="eyebrow mb-4">Tonos disponibles</p>
-            <div class="flex flex-wrap gap-4">
-              <div
+            <p class="eyebrow mb-4">Elige tu tono</p>
+            <div class="flex flex-wrap gap-3" role="radiogroup" :aria-label="`Tonos de ${product.name}`">
+              <button
                 v-for="tone in product.tones"
                 :key="tone.name"
-                class="flex flex-col items-center gap-2"
+                type="button"
+                role="radio"
+                :aria-checked="selectedTone?.name === tone.name"
+                :aria-label="`Tono ${tone.name}`"
+                class="flex flex-col items-center gap-2 rounded-2xl border px-3 py-3 transition-all focus-visible:ring-2 focus-visible:ring-glam-rose-400"
+                :class="selectedTone?.name === tone.name ? 'border-glam-ink bg-glam-ink text-white' : 'border-glam-line bg-white hover:border-glam-ink/40'"
+                :data-testid="`tone-${tone.name}`"
+                @click="selectedTone = selectedTone?.name === tone.name ? undefined : tone"
               >
-                <span
-                  class="h-10 w-10 rounded-full border border-glam-line"
-                  :style="{ backgroundColor: tone.hex }"
-                  :aria-label="`Tono ${tone.name}`"
-                />
-                <span class="text-[10px] uppercase tracking-ultra text-glam-muted">{{ tone.name }}</span>
-              </div>
+                <span class="h-8 w-8 rounded-full border border-glam-line" :style="{ backgroundColor: tone.hex }" aria-hidden="true" />
+                <span class="text-[10px] uppercase tracking-ultra" :class="selectedTone?.name === tone.name ? 'text-white' : 'text-glam-muted'">{{ tone.name }}</span>
+              </button>
+            </div>
+            <p v-if="selectedTone" class="mt-3 text-xs text-glam-muted">Seleccionado: {{ selectedTone.name }}</p>
+          </div>
+
+          <div class="mt-8 flex items-center gap-3">
+            <p class="eyebrow">Cantidad</p>
+            <div class="flex items-center gap-1 rounded-full border border-glam-line p-1">
+              <button
+                type="button"
+                class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-glam-line/40 disabled:opacity-30"
+                :disabled="quantity <= 1"
+                aria-label="Reducir cantidad"
+                data-testid="qty-dec"
+                @click="decQty"
+              >
+                −
+              </button>
+              <span class="min-w-[40px] text-center text-sm font-medium" aria-live="polite" data-testid="qty-value">{{ quantity }}</span>
+              <button
+                type="button"
+                class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-glam-line/40 disabled:opacity-30"
+                :disabled="quantity >= 99"
+                aria-label="Aumentar cantidad"
+                data-testid="qty-inc"
+                @click="incQty"
+              >
+                +
+              </button>
+            </div>
+            <span class="text-xs uppercase tracking-ultra text-glam-muted">máx 99</span>
+          </div>
+
+          <div class="mt-8 flex flex-col gap-3">
+            <button
+              type="button"
+              class="btn-primary w-full"
+              data-testid="add-to-cart"
+              data-cursor="ver"
+              @click="handleAddToCart"
+            >
+              Añadir al carrito — {{ product.price || 'Consultar' }}
+            </button>
+            <div class="grid grid-cols-2 gap-3">
+              <a
+                :href="whatsappLink.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-whatsapp"
+                data-cursor="hablar"
+                data-cursor-label="Hablar"
+                data-testid="product-whatsapp"
+                @click="trackWhatsAppClick({ source: 'product-detail', product: product?.name })"
+              >
+                <WhatsAppIcon class="h-5 w-5" />
+                Consultar
+              </a>
+              <RouterLink to="/catalogo" class="btn-secondary justify-center">
+                <ArrowRight class="h-4 w-4 rotate-180" />
+                Volver
+              </RouterLink>
             </div>
           </div>
 
-          <div class="mt-12 flex flex-col gap-3 sm:flex-row">
-            <a
-              :href="whatsappLink.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-whatsapp flex-1"
-              data-cursor="hablar"
-              data-cursor-label="Hablar"
-              data-testid="product-whatsapp"
-              @click="trackWhatsAppClick({ source: 'product-detail', product: product?.name })"
-            >
-              <WhatsAppIcon class="h-5 w-5" />
-              Consultar por WhatsApp
-            </a>
-            <RouterLink to="/catalogo" class="btn-secondary">
-              <ArrowRight class="h-4 w-4 rotate-180" />
-              Volver
-            </RouterLink>
+          <div
+            v-if="addedToast"
+            class="mt-4 rounded-2xl border border-glam-rose-200 bg-glam-rose-50 px-4 py-3 text-sm text-glam-rose-600"
+            role="status"
+            aria-live="polite"
+            data-testid="add-toast"
+          >
+            Añadido al carrito · <button type="button" class="underline" @click="openCartFromToast">Ver carrito</button>
           </div>
 
           <p class="mt-6 text-[10px] uppercase tracking-ultra italic text-glam-muted">

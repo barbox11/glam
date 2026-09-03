@@ -1,4 +1,4 @@
-type AnalyticsEvent = 'click_whatsapp' | 'view_product' | 'view_detail';
+type AnalyticsEvent = 'click_whatsapp' | 'view_product' | 'view_detail' | 'add_to_cart' | 'view_cart';
 
 interface TrackOptions {
   source?: string;
@@ -23,17 +23,23 @@ export function trackEvent(event: AnalyticsEvent, opts: TrackOptions = {}) {
   // Plausible
   try {
     window.plausible?.(event, { props });
-  } catch {}
+  } catch (_e) {
+    void _e;
+  }
 
   // Umami
   try {
     window.umami?.track(event, props);
-  } catch {}
+  } catch (_e) {
+    void _e;
+  }
 
   // GA4 fallback
   try {
     window.gtag?.('event', event, props);
-  } catch {}
+  } catch (_e) {
+    void _e;
+  }
 
   // Debug en dev
   if (import.meta.env.DEV) {
