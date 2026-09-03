@@ -41,17 +41,18 @@ function onKey(e: KeyboardEvent) {
 watch(isOpen, (open) => {
   if (open) {
     stopLenis();
+    // solo body, no html — evita reflow doble en PC (html.lenis ya gestiona)
     document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
     const main = document.getElementById('main-content');
     if (main) main.setAttribute('inert', '');
-    // focus sin bloquear el transition: rAF evita layout thrash
+    // pausa cursor custom para liberar RAF en PC
+    window.dispatchEvent(new CustomEvent('glam:cursor-pause'));
     requestAnimationFrame(() => drawerRef.value?.focus());
   } else {
     document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
     const main = document.getElementById('main-content');
     if (main) main.removeAttribute('inert');
+    window.dispatchEvent(new CustomEvent('glam:cursor-resume'));
     startLenis();
   }
 });
@@ -132,7 +133,11 @@ function formatTotal(n: number) {
         </div>
 
         <div v-else class="flex flex-1 flex-col overflow-hidden">
-          <div class="flex-1 overflow-y-auto px-6" aria-live="polite">
+          <div
+            class="flex-1 overflow-y-auto px-6"
+            style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch; contain: content;"
+            aria-live="polite"
+          >
             <CartLineItem v-for="line in lines" :key="`${line.productId}-${line.tone?.name||'default'}`" :line="line" />
           </div>
 

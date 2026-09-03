@@ -39,16 +39,22 @@ const setState = (state: EstadoCursor | null, label: string) => {
 
 const animate = () => {
   if (!enabled) return;
-  ringPos.x += (target.x - ringPos.x) * RING_EASE;
-  ringPos.y += (target.y - ringPos.y) * RING_EASE;
-  dotPos.x += (target.x - dotPos.x) * DOT_EASE;
-  dotPos.y += (target.y - dotPos.y) * DOT_EASE;
-
-  if (ringRef.value) {
-    ringRef.value.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0) translate(-50%, -50%)`;
-  }
-  if (dotRef.value) {
-    dotRef.value.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`;
+  const dxR = target.x - ringPos.x;
+  const dyR = target.y - ringPos.y;
+  const dxD = target.x - dotPos.x;
+  const dyD = target.y - dotPos.y;
+  const moving = Math.abs(dxR) > 0.1 || Math.abs(dyR) > 0.1 || Math.abs(dxD) > 0.1 || Math.abs(dyD) > 0.1;
+  if (moving) {
+    ringPos.x += dxR * RING_EASE;
+    ringPos.y += dyR * RING_EASE;
+    dotPos.x += dxD * DOT_EASE;
+    dotPos.y += dyD * DOT_EASE;
+    if (ringRef.value) {
+      ringRef.value.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0) translate(-50%, -50%)`;
+    }
+    if (dotRef.value) {
+      dotRef.value.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`;
+    }
   }
   raf = requestAnimationFrame(animate);
 };
@@ -115,6 +121,16 @@ const onMediaChange = () => {
 
 let mql: MediaQueryList | null = null;
 
+const pauseByCart = ref(false);
+const onCartPause = () => {
+  pauseByCart.value = true;
+  disable();
+};
+const onCartResume = () => {
+  pauseByCart.value = false;
+  if (isDesktopWithMouse()) enable();
+};
+
 onMounted(() => {
   onMediaChange();
   mql = window.matchMedia('(min-width: 1024px)');
@@ -126,6 +142,8 @@ onMounted(() => {
   window.addEventListener('mouseup', onUp);
   document.documentElement.addEventListener('mouseleave', onLeave);
   document.documentElement.addEventListener('mouseenter', onEnter);
+  window.addEventListener('glam:cursor-pause', onCartPause);
+  window.addEventListener('glam:cursor-resume', onCartResume);
 });
 
 onBeforeUnmount(() => {
@@ -135,6 +153,8 @@ onBeforeUnmount(() => {
   }
   document.documentElement.removeEventListener('mouseleave', onLeave);
   document.documentElement.removeEventListener('mouseenter', onEnter);
+  window.removeEventListener('glam:cursor-pause', onCartPause);
+  window.removeEventListener('glam:cursor-resume', onCartResume);
   disable();
   window.removeEventListener('mousemove', onMove);
   window.removeEventListener('mouseover', onOver);
