@@ -44,19 +44,23 @@ function hydrate() {
   } catch (_e) {
     void _e;
   }
-  // persist after hydrate
+  // persist after hydrate — debounced para no bloquear UI al spamear +/-
   persistEnabled = true;
+  let saveTimer: number | null = null;
   watch(
     cart,
     (val) => {
       if (!persistEnabled) return;
-      try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(val));
-      } catch (_e) {
-        void _e;
-      }
+      if (saveTimer) window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(() => {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(val));
+        } catch (_e) {
+          void _e;
+        }
+      }, 80);
     },
-    { deep: true },
+    { deep: true, flush: 'post' },
   );
 }
 

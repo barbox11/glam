@@ -17,7 +17,16 @@ function inc(line: CartLine) {
 <template>
   <div class="flex gap-4 py-5" data-testid="cart-line">
     <div class="h-20 w-20 shrink-0 overflow-hidden bg-glam-cream">
-      <img :src="line.product.image" :alt="line.product.name" class="h-full w-full object-cover" loading="lazy" />
+      <img
+        :src="line.product.image"
+        :alt="line.product.name"
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+        width="80"
+        height="80"
+        fetchpriority="low"
+      />
     </div>
     <div class="flex flex-1 flex-col">
       <div class="flex items-start justify-between gap-2">

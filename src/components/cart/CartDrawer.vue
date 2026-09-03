@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount, computed, nextTick } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount, computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useCart } from '@/composables/useCart';
 import { generateWhatsAppCartLink } from '@/utils/whatsapp';
 import { trackWhatsAppClick } from '@/utils/analytics';
+import { useLenis } from '@/composables/useLenis';
 import CartLineItem from './CartLineItem.vue';
 import WhatsAppIcon from '@/components/icons/WhatsAppIcon.vue';
 
@@ -11,6 +12,7 @@ const isOpen = ref(false);
 const drawerRef = ref<HTMLElement | null>(null);
 
 const { lines, count, total, isEmpty, clear } = useCart();
+const { stop: stopLenis, start: startLenis } = useLenis();
 
 function open() {
   isOpen.value = true;
@@ -36,19 +38,21 @@ function onKey(e: KeyboardEvent) {
   if (e.key === 'Escape' && isOpen.value) close();
 }
 
-watch(isOpen, async (open) => {
+watch(isOpen, (open) => {
   if (open) {
+    stopLenis();
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
     const main = document.getElementById('main-content');
     if (main) main.setAttribute('inert', '');
-    await nextTick();
-    drawerRef.value?.focus();
+    // focus sin bloquear el transition: rAF evita layout thrash
+    requestAnimationFrame(() => drawerRef.value?.focus());
   } else {
     document.body.style.overflow = '';
     document.documentElement.style.overflow = '';
     const main = document.getElementById('main-content');
     if (main) main.removeAttribute('inert');
+    startLenis();
   }
 });
 
@@ -74,22 +78,23 @@ function formatTotal(n: number) {
 <template>
   <Teleport to="body">
     <Transition
-      enter-active-class="transition-opacity duration-300 ease-elegant"
-      leave-active-class="transition-opacity duration-200 ease-elegant"
+      enter-active-class="transition-opacity duration-200 ease-out"
+      leave-active-class="transition-opacity duration-150 ease-out"
       enter-from-class="opacity-0"
       leave-to-class="opacity-0"
     >
       <div
         v-if="isOpen"
-        class="fixed inset-0 z-[70] bg-glam-ink/40 backdrop-blur-sm"
+        class="fixed inset-0 z-[70] bg-glam-ink/50"
+        style="overscroll-behavior: contain"
         aria-hidden="true"
         @click="close"
       />
     </Transition>
 
     <Transition
-      enter-active-class="transition-transform duration-500 ease-elegant"
-      leave-active-class="transition-transform duration-300 ease-elegant"
+      enter-active-class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
+      leave-active-class="transition-transform duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform"
       enter-from-class="translate-x-full"
       leave-to-class="translate-x-full"
     >
@@ -97,12 +102,13 @@ function formatTotal(n: number) {
         v-if="isOpen"
         ref="drawerRef"
         tabindex="-1"
-        class="fixed inset-y-0 right-0 z-[71] flex w-full max-w-[420px] flex-col bg-glam-white shadow-2xl outline-none"
+        class="fixed inset-y-0 right-0 z-[71] flex w-full max-w-[420px] flex-col bg-glam-white shadow-2xl outline-none transform-gpu"
         role="dialog"
         aria-modal="true"
         aria-label="Carrito de compras"
         data-testid="cart-drawer"
         data-lenis-prevent
+        style="will-change: transform; overscroll-behavior: contain"
       >
         <div class="flex items-center justify-between border-b border-glam-line px-6 py-5">
           <h2 class="font-display text-xl">Carrito <span class="text-glam-muted">· {{ count }} {{ count===1?'pieza':'piezas' }}</span></h2>

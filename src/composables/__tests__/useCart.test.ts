@@ -94,7 +94,7 @@ describe('useCart', () => {
   it('persiste en localStorage', async () => {
     const { add } = useCart();
     add(products[0].id, undefined, 4);
-    await new Promise((r) => setTimeout(r, 0));
+    await new Promise((r) => setTimeout(r, 120));
     const raw = localStorage.getItem('glam_cart_v1');
     expect(raw).not.toBeNull();
     expect(raw as string).toContain(products[0].id);
