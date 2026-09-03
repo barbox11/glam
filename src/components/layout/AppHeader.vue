@@ -100,7 +100,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
         <button
           type="button"
           class="relative flex min-h-[44px] min-w-[44px] items-center justify-center gap-2 rounded-full px-3 text-[11px] uppercase tracking-ultra text-glam-ink transition-colors hover:bg-glam-line/30 md:min-h-0 md:min-w-0"
-          aria-label="Abrir carrito"
+          :aria-label="cartCount > 0 ? `Abrir carrito, ${cartCount} ${cartCount === 1 ? 'producto' : 'productos'}` : 'Abrir carrito'"
           data-testid="header-cart"
           @click="openCart"
         >
@@ -111,8 +111,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
           <span class="hidden md:inline">Carrito</span>
           <span
             v-if="cartCount > 0"
-            class="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-glam-rose-500 px-1.5 text-[10px] font-bold text-white"
-            :aria-label="`${cartCount} productos en el carrito`"
+            class="pointer-events-none absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-glam-rose-500 px-1 text-[10px] font-bold leading-none text-white ring-2 ring-glam-white tabular-nums"
+            aria-hidden="true"
             data-testid="cart-badge"
           >
             {{ cartCount > 99 ? '99+' : cartCount }}
